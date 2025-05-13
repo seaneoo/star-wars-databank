@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StarWarsDatabank">
         <activity
-            android:name=".SplashScreen"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.StarWarsDatabank.SplashScreen">
             <intent-filter>
@@ -20,9 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
     </application>
 
 </manifest>
