@@ -12,6 +12,9 @@
         android:theme="@style/Theme.StarWarsDatabank">
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WelcomeActivity"
             android:exported="true"
             android:theme="@style/Theme.StarWarsDatabank.SplashScreen">
             <intent-filter>
