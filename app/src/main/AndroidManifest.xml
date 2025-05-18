@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StarWarsDatabank">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity

@@ -10,51 +10,39 @@
     tools:context=".WelcomeActivity">
 
     <ImageView
-        android:id="@+id/imageView_icon"
-        android:layout_width="match_parent"
+        android:id="@+id/image_wordmark"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
-
-    <ImageView
-        android:id="@+id/imageView_wordmark"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_icon"
         app:srcCompat="@drawable/wordmark" />
 
     <Button
         android:id="@+id/button_login"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/login"
         app:layout_constraintBottom_toTopOf="@+id/button_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="VisualLintButtonSize" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_register"
         style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="@string/register"
         app:layout_constraintBottom_toTopOf="@+id/textView_version"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="VisualLintButtonSize" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView_version"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/version"
@@ -66,7 +54,7 @@
 
     <TextView
         android:id="@+id/textView_author"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:text="@string/author"
         android:textAlignment="center"

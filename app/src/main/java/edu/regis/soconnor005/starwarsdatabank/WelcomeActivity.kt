@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnticipateInterpolator
 import android.widget.Button
 import android.widget.TextView
@@ -13,9 +14,13 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 
 class WelcomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        /**
+         * Install splash screen and set up animation(s)
+         */
         installSplashScreen()
         splashScreen.setOnExitAnimationListener { view ->
             val slideUp = ObjectAnimator.ofFloat(view, View.SCALE_X, 1f, 0f)
@@ -30,23 +35,34 @@ class WelcomeActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_welcome)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.welcome)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        /**
+         * Modified the default insets code
+         * https://developer.android.com/develop/ui/views/layout/edge-to-edge
+         */
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_welcome)) { v, insets ->
+            val systemBars =
+                insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
+            v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemBars.top
+                rightMargin = systemBars.right
+                bottomMargin = systemBars.bottom
+                leftMargin = systemBars.left
+            }
+            WindowInsetsCompat.CONSUMED
         }
 
-        val versionText = getString(R.string.version, "1.0.0")
-        findViewById<TextView>(R.id.text_version).text = versionText
+        findViewById<TextView>(R.id.textView_version).text = getString(R.string.version, "1.0.0")
+        findViewById<TextView>(R.id.textView_author).text =
+            getString(R.string.author, "Sean O'Connor")
 
-        val buttonLogin = findViewById<Button>(R.id.button_login)
-        buttonLogin.setOnClickListener {
+        findViewById<Button>(R.id.button_login).setOnClickListener {
             val loginActivity = Intent(this, LoginActivity::class.java)
             startActivity(loginActivity)
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
 
-        val buttonRegister = findViewById<Button>(R.id.button_register)
-        buttonRegister.setOnClickListener { /* TODO */ }
+        findViewById<Button>(R.id.button_register).setOnClickListener {
+            val registerActivity = Intent(this, RegisterActivity::class.java)
+            startActivity(registerActivity)
+        }
     }
 }

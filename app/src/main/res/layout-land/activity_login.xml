@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/md_theme_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,47 +46,48 @@
         <EditText
             android:id="@+id/editText_username"
             style="@style/Theme.StarWarsDatabank.TextInputEditText"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:autofillHints="username"
             android:hint="@string/username"
             android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_login"
-            tools:ignore="VisualLintTextFieldSize" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_login" />
 
         <EditText
             android:id="@+id/editText_password"
             style="@style/Theme.StarWarsDatabank.TextInputEditText"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:autofillHints="password"
             android:hint="@string/password"
             android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_username"
-            tools:ignore="VisualLintTextFieldSize" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_username" />
 
         <Button
             android:id="@+id/button_login"
             style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/_continue"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_password"
-            tools:ignore="VisualLintButtonSize" />
+            app:layout_constraintTop_toBottomOf="@+id/editText_password" />
 
         <Button
             android:id="@+id/button_forgotUsernamePassword"
             style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/forgot_username_password"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_login"
             tools:ignore="VisualLintButtonSize" />
