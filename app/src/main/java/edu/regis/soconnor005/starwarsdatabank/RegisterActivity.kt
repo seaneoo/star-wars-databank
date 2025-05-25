@@ -3,6 +3,7 @@ package edu.regis.soconnor005.starwarsdatabank
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -37,8 +38,17 @@ class RegisterActivity : AppCompatActivity() {
          * Add functionality to back button.
          */
         findViewById<ImageButton>(R.id.button_back).setOnClickListener {
-            val registerActivity = Intent(this, WelcomeActivity::class.java)
-            startActivity(registerActivity)
+            val welcomeActivity = Intent(this, WelcomeActivity::class.java)
+            startActivity(welcomeActivity)
+        }
+
+        /**
+         * For now we just let the user go to the landing screen
+         * without registering.
+         */
+        findViewById<Button>(R.id.button_register).setOnClickListener {
+            val landingActivity = Intent(this, LandingActivity::class.java)
+            startActivity(landingActivity)
         }
     }
 }
