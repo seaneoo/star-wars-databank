@@ -23,19 +23,21 @@ class DetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
 
-        val itemName = args.itemName
-        view.findViewById<TextView>(R.id.item_name).text = itemName
+        val entry = args.entry
+        view.findViewById<TextView>(R.id.item_category).text = entry.category
+        view.findViewById<TextView>(R.id.item_name).text = entry.name
+        view.findViewById<TextView>(R.id.item_description).text = entry.description
 
         view.findViewById<ImageButton>(R.id.button_back).setOnClickListener {
             findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
         }
 
         val buttonEdit = view.findViewById<ImageButton>(R.id.button_edit)
-        buttonEdit.contentDescription = getString(R.string.edit_item, itemName)
+        buttonEdit.contentDescription = getString(R.string.edit_item, entry)
         buttonEdit.setOnClickListener {
             findNavController().navigate(
                 DetailFragmentDirections.actionDetailFragmentToEditFragment(
-                    itemName
+                    entry
                 )
             )
         }

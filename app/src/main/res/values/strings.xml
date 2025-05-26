@@ -15,7 +15,7 @@
     <string name="edit_item">Edit %1$s</string>
     <string name="item_category">Item category</string>
     <string name="item_name">Item name</string>
-    <string name="item_biography">Item biography</string>
+    <string name="item_description">Item description</string>
     <string name="save_item">Save Entry</string>
     <string-array name="items">
         <item>Anakin Skywalker</item>

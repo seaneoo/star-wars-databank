@@ -24,14 +24,15 @@ class EditFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_edit, container, false)
 
-        val itemName = args.itemName
+        val entry = args.entry
         view.findViewById<TextView>(R.id.textView_editItem).text =
-            getString(R.string.edit_item, itemName)
+            getString(R.string.edit_item, entry.name)
+        view.findViewById<TextView>(R.id.editText_description).text = entry.description
 
         view.findViewById<ImageButton>(R.id.button_back).setOnClickListener {
             findNavController().navigate(
                 EditFragmentDirections.actionEditFragmentToDetailFragment(
-                    itemName
+                    entry
                 )
             )
         }
@@ -39,7 +40,7 @@ class EditFragment : Fragment() {
         view.findViewById<Button>(R.id.button_save_item).setOnClickListener {
             findNavController().navigate(
                 EditFragmentDirections.actionEditFragmentToDetailFragment(
-                    itemName
+                    entry
                 )
             )
         }
