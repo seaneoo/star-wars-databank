@@ -51,4 +51,5 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.lifecycle.viewmodel)
 }
