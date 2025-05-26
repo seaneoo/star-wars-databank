@@ -34,9 +34,8 @@
             android:id="@+id/textView_editItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
             android:text="@string/edit_item"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/md_theme_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +45,7 @@
         <EditText
             android:id="@+id/editText_biography"
             style="@style/Theme.StarWarsDatabank.TextInputEditText"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:autofillHints=""
@@ -55,6 +54,7 @@
             android:inputType="textMultiLine"
             android:lines="4"
             android:minLines="4"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_editItem"
             tools:ignore="VisualLintTextFieldSize" />
@@ -62,10 +62,11 @@
         <Button
             android:id="@+id/button_save_item"
             style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/save_item"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_biography"
             tools:ignore="VisualLintButtonSize" />

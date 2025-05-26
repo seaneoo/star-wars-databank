@@ -49,6 +49,7 @@ class RegisterActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button_register).setOnClickListener {
             val landingActivity = Intent(this, LandingActivity::class.java)
             startActivity(landingActivity)
+            finish()
         }
     }
 }

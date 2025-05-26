@@ -13,6 +13,10 @@
     <string name="forgot_username_password">Forgot username or password?</string>
     <string name="add_item">Add Entry</string>
     <string name="edit_item">Edit %1$s</string>
+    <string name="item_category">Item category</string>
+    <string name="item_name">Item name</string>
+    <string name="item_biography">Item biography</string>
+    <string name="save_item">Save Entry</string>
     <string-array name="items">
         <item>Anakin Skywalker</item>
         <item>Padmé Amidala</item>

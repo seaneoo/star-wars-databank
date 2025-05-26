@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:paddingHorizontal="32dp"
-    tools:context=".fragment.EditFragment">
+    tools:context=".fragment.AddFragment">
 
     <ImageButton
         android:id="@+id/button_back"
@@ -31,12 +31,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView_editItem"
+            android:id="@+id/textView_addItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@string/edit_item"
+            android:text="@string/add_item"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/md_theme_onBackground"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,28 +43,58 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
+            android:id="@+id/editText_category"
+            style="@style/Theme.StarWarsDatabank.TextInputEditText"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:autofillHints=""
+            android:hint="@string/item_category"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_addItem"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
+            android:id="@+id/editText_name"
+            style="@style/Theme.StarWarsDatabank.TextInputEditText"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:autofillHints=""
+            android:hint="@string/item_name"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_category"
+            tools:ignore="VisualLintTextFieldSize" />
+
+        <EditText
             android:id="@+id/editText_biography"
             style="@style/Theme.StarWarsDatabank.TextInputEditText"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:autofillHints=""
             android:gravity="top|start"
             android:hint="@string/item_biography"
             android:inputType="textMultiLine"
-            android:lines="4"
-            android:minLines="4"
+            android:lines="2"
+            android:minLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_editItem"
+            app:layout_constraintTop_toBottomOf="@+id/editText_name"
             tools:ignore="VisualLintTextFieldSize" />
 
         <Button
-            android:id="@+id/button_save_item"
+            android:id="@+id/button_add_item"
             style="@style/Widget.Material3.Button"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/save_item"
+            android:text="@string/add_item"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editText_biography"
             tools:ignore="VisualLintButtonSize" />
