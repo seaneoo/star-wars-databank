@@ -2,11 +2,13 @@ package edu.regis.soconnor005.starwarsdatabank
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.navigation.fragment.NavHostFragment
 
 class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +31,26 @@ class LandingActivity : AppCompatActivity() {
                 leftMargin = systemBars.left
             }
             WindowInsetsCompat.CONSUMED
+        }
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        findViewById<Button>(R.id.button_list).setOnClickListener {
+            navController.navigate(R.id.list_fragment)
+        }
+
+        findViewById<Button>(R.id.button_detail).setOnClickListener {
+            navController.navigate(R.id.detail_fragment)
+        }
+
+        findViewById<Button>(R.id.button_add).setOnClickListener {
+            navController.navigate(R.id.add_fragment)
+        }
+
+        findViewById<Button>(R.id.button_edit).setOnClickListener {
+            navController.navigate(R.id.edit_fragment)
         }
     }
 }
