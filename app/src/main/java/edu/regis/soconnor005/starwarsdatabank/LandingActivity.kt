@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.ViewModelProvider
+import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 
 class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,5 +32,7 @@ class LandingActivity : AppCompatActivity() {
             }
             WindowInsetsCompat.CONSUMED
         }
+
+        ViewModelProvider(this)[DatabankViewModel::class]
     }
 }

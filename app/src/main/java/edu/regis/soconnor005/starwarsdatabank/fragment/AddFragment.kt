@@ -11,10 +11,6 @@ import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.R
 
 class AddFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {

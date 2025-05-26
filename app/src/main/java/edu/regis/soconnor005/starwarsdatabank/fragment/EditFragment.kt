@@ -15,10 +15,6 @@ import edu.regis.soconnor005.starwarsdatabank.R
 class EditFragment : Fragment() {
     private val args by navArgs<EditFragmentArgs>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {

@@ -14,17 +14,13 @@ import edu.regis.soconnor005.starwarsdatabank.R
 class DetailFragment : Fragment() {
     private val args by navArgs<DetailFragmentArgs>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
 
         val entry = args.entry
-        view.findViewById<TextView>(R.id.item_category).text = entry.category
+        view.findViewById<TextView>(R.id.item_category).text = entry.category.name
         view.findViewById<TextView>(R.id.item_name).text = entry.name
         view.findViewById<TextView>(R.id.item_description).text = entry.description
 
