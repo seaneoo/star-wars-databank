@@ -9,5 +9,17 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="_continue">Continue</string>
+    <string name="back">Back</string>
     <string name="forgot_username_password">Forgot username or password?</string>
+    <string name="add_item">Add Entry</string>
+    <string name="edit_item">Edit %1$s</string>
+    <string-array name="items">
+        <item>Anakin Skywalker</item>
+        <item>Padmé Amidala</item>
+        <item>Luke Skywalker</item>
+        <item>Leia Organa</item>
+        <item>Tatooine</item>
+        <item>Naboo</item>
+        <item>Alderaan</item>
+    </string-array>
 </resources>

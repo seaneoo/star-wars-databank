@@ -15,7 +15,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
         android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/ipsum"
+        android:contentDescription="@string/back"
         android:padding="8dp"
         android:scaleType="fitXY"
         android:src="@drawable/arrow_back"

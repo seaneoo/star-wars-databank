@@ -1,26 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/list_fragment">
 
     <fragment
         android:id="@+id/list_fragment"
         android:name="edu.regis.soconnor005.starwarsdatabank.fragment.ListFragment"
-        android:label="ListFragment" />
+        android:label="ListFragment">
+        <action
+            android:id="@+id/action_list_fragment_to_detail_fragment"
+            app:destination="@id/detail_fragment" />
+        <action
+            android:id="@+id/action_list_fragment_to_addFragment"
+            app:destination="@id/addFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/detail_fragment"
         android:name="edu.regis.soconnor005.starwarsdatabank.fragment.DetailFragment"
-        android:label="DetailFragment" />
-
+        android:label="DetailFragment">
+        <action
+            android:id="@+id/action_detail_fragment_to_list_fragment"
+            app:destination="@id/list_fragment" />
+        <argument
+            android:name="item_name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_detail_fragment_to_editFragment"
+            app:destination="@id/editFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/add_fragment"
+        android:id="@+id/addFragment"
         android:name="edu.regis.soconnor005.starwarsdatabank.fragment.AddFragment"
-        android:label="AddFragment" />
-
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add">
+        <action
+            android:id="@+id/action_addFragment_to_list_fragment"
+            app:destination="@id/list_fragment" />
+    </fragment>
     <fragment
-        android:id="@+id/edit_fragment"
+        android:id="@+id/editFragment"
         android:name="edu.regis.soconnor005.starwarsdatabank.fragment.EditFragment"
-        android:label="EditFragment" />
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit">
+        <action
+            android:id="@+id/action_editFragment_to_detail_fragment"
+            app:destination="@id/detail_fragment" />
+        <argument
+            android:name="item_name"
+            app:argType="string" />
+    </fragment>
 </navigation>
