@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import edu.regis.soconnor005.starwarsdatabank.R
+import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
 
 class DetailFragment : Fragment() {
     private val args by navArgs<DetailFragmentArgs>()
@@ -20,6 +22,14 @@ class DetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_detail, container, false)
 
         val entry = args.entry
+
+        val itemCategoryIcon = view.findViewById<ImageView>(R.id.item_category_icon)
+        when (entry.category) {
+            EntryCategory.Character -> itemCategoryIcon.setImageResource(R.drawable.character)
+            EntryCategory.Planet -> itemCategoryIcon.setImageResource(R.drawable.planet)
+            EntryCategory.Vehicle -> itemCategoryIcon.setImageResource(R.drawable.vehicle)
+        }
+
         view.findViewById<TextView>(R.id.item_category).text = entry.category.name
         view.findViewById<TextView>(R.id.item_name).text = entry.name
         view.findViewById<TextView>(R.id.item_description).text = entry.description

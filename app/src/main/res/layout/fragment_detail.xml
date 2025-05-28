@@ -44,30 +44,51 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/item_category"
-            style="@style/TextAppearance.Material3.BodyLarge"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_category_wrapper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ipsum"
-            android:textAllCaps="true"
-            android:textColor="@color/md_theme_onBackground"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/item_category_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ipsum"
+                android:src="@drawable/character"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/md_theme_onBackground" />
+
+            <TextView
+                android:id="@+id/item_category"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/ipsum"
+                android:textAllCaps="true"
+                android:textColor="@color/md_theme_onBackground"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_category_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/item_name"
             style="@style/TextAppearance.Material3.DisplaySmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/ipsum"
             android:textColor="@color/md_theme_onBackground"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_category"
+            app:layout_constraintTop_toBottomOf="@id/item_category_wrapper"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -75,7 +96,7 @@
             style="@style/TextAppearance.Material3.BodyLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="@string/ipsum"
             android:textColor="@color/md_theme_onBackground"
             app:layout_constraintBottom_toBottomOf="parent"
