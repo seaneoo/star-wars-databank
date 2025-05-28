@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -34,7 +34,7 @@ class ListFragment : Fragment() {
             navController.navigate(action)
         }
 
-        view.findViewById<Button>(R.id.button_add_item).setOnClickListener {
+        view.findViewById<ImageButton>(R.id.button_add_item).setOnClickListener {
             navController.navigate(ListFragmentDirections.actionListFragmentToAddFragment())
         }
 
