@@ -33,6 +33,7 @@ class LandingActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        ViewModelProvider(this)[DatabankViewModel::class]
+        val viewModel = ViewModelProvider(this)[DatabankViewModel::class]
+        viewModel.initData()
     }
 }

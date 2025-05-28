@@ -23,13 +23,13 @@ class ListFragment : Fragment() {
 
         val itemList = view.findViewById<ListView>(R.id.item_list)
         val arrayAdapter = ArrayAdapter(
-            requireContext(), R.layout.list_item, databankViewModel.entries.map { it.name })
+            requireContext(), R.layout.list_item, databankViewModel.getEntries().map { it.name })
 
         val navController = findNavController()
 
         itemList.adapter = arrayAdapter
         itemList.setOnItemClickListener { _, _, position, _ ->
-            val item = databankViewModel.entries[position]
+            val item = databankViewModel.getEntries()[position]
             val action = ListFragmentDirections.actionListFragmentToDetailFragment(item)
             navController.navigate(action)
         }
