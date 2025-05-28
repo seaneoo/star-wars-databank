@@ -13,6 +13,7 @@
     <string name="forgot_username_password">Forgot username or password?</string>
     <string name="add_item">Add Entry</string>
     <string name="edit_item">Edit %1$s</string>
+    <string name="delete_item">Delete %1$s</string>
     <string name="item_category">Item category</string>
     <string name="item_name">Item name</string>
     <string name="item_description">Item description</string>

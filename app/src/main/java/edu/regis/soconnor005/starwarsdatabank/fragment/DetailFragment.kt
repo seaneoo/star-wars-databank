@@ -8,13 +8,16 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import edu.regis.soconnor005.starwarsdatabank.R
+import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
 
 class DetailFragment : Fragment() {
     private val args by navArgs<DetailFragmentArgs>()
+    private val databankViewModel by activityViewModels<DatabankViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
@@ -46,6 +49,13 @@ class DetailFragment : Fragment() {
                     entry
                 )
             )
+        }
+
+        val buttonDelete = view.findViewById<ImageButton>(R.id.button_delete)
+        buttonDelete.contentDescription = getString(R.string.delete_item, entry)
+        buttonDelete.setOnClickListener {
+            databankViewModel.deleteEntry(entry.id)
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
         }
 
         return view
