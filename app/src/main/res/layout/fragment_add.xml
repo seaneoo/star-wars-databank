@@ -41,18 +41,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editText_category"
-            style="@style/Theme.StarWarsDatabank.TextInputEditText"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dropdown_category"
+            style="@style/Theme.StarWarsDatabank.DropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:autofillHints=""
             android:hint="@string/item_category"
-            android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_addItem"
-            tools:ignore="VisualLintTextFieldSize" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_addItem">
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
             android:id="@+id/editText_name"
@@ -64,7 +63,7 @@
             android:hint="@string/item_name"
             android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_category"
+            app:layout_constraintTop_toBottomOf="@+id/dropdown_category"
             tools:ignore="VisualLintTextFieldSize" />
 
         <EditText

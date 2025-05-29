@@ -62,4 +62,9 @@
         <item name="android:background">@color/md_theme_surfaceContainer</item>
         <item name="android:textColorHint">@color/md_theme_onSurface</item>
     </style>
+
+    <style name="Theme.StarWarsDatabank.DropdownMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:background">@color/md_theme_surfaceContainer</item>
+        <item name="android:textColorHint">@color/md_theme_onSurface</item>
+    </style>
 </resources>
