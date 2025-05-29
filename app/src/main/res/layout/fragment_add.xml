@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/dropdown_category"
+            android:id="@+id/textInputLayout"
             style="@style/Theme.StarWarsDatabank.DropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,6 +50,15 @@
             android:hint="@string/item_category"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView_addItem">
+
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/ipsum"
+                android:textColor="@color/md_theme_onSurface"
+                tools:ignore="LabelFor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +72,7 @@
             android:hint="@string/item_name"
             android:inputType="text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dropdown_category"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
             tools:ignore="VisualLintTextFieldSize" />
 
         <EditText
