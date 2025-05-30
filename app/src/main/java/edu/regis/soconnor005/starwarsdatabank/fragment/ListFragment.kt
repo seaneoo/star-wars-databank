@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.Entry
+import edu.regis.soconnor005.starwarsdatabank.data.getCategoryDrawable
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
 
 
@@ -35,14 +36,20 @@ class ListFragment : Fragment() {
 
         val navController = findNavController()
         val entriesArrayAdapter = object : ArrayAdapter<Entry>(
-            requireContext(), R.layout.list_item, R.id.text1, viewModel.getEntries().toList()
+            requireContext(), R.layout.list_item, R.id.title, viewModel.getEntries().toList()
         ) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val adapterView = super.getView(position, convertView, parent)
                 val item = getItem(position)
                 if (item != null) {
-                    adapterView.findViewById<TextView>(R.id.text1).text = item.name
-                    adapterView.findViewById<TextView>(R.id.text2).text = item.description
+                    val title = adapterView.findViewById<TextView>(R.id.title)
+                    title.setCompoundDrawablesWithIntrinsicBounds(
+                        item.getCategoryDrawable(context), null, null, null
+                    )
+                    title.text = item.name
+
+//                    adapterView.findViewById<ImageView>(R.id.image).contentDescription = item.name
+//                    adapterView.findViewById<TextView>(R.id.subtitle).text = item.description
                 }
                 return adapterView
             }
