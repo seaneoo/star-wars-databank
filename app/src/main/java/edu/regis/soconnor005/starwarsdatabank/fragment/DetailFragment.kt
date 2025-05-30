@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
+import edu.regis.soconnor005.starwarsdatabank.data.getCategoryDrawableId
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -42,6 +43,7 @@ class DetailFragment : Fragment() {
         }
 
         // Set the other item properties
+        binding.itemCategoryIcon.setImageResource(entry.getCategoryDrawableId())
         binding.itemCategory.text = entry.category.name
         binding.itemName.text = entry.name
         binding.itemDescription.text = entry.description
