@@ -47,6 +47,14 @@ class DatabankViewModel : ViewModel() {
                 category = EntryCategory.Vehicle,
                 name = "Speeder Bike",
                 description = "Speeder bikes are common sights throughout the galaxy, with manufacturers turning out both civilian and military models."
+            ), Entry(
+                category = EntryCategory.Character,
+                name = "Klaud",
+                description = "Klaud might have joined the Resistance as a result of mistaken identity, but he is welcomed as an ally by the freedom fighters."
+            ), Entry(
+                category = EntryCategory.Character,
+                name = "Captain Panaka",
+                description = "Queen Amidala's loyal protector during the Trade Federation invasion crisis was Captain Panaka. Panaka was often referred to as \"the quickest eyes on Naboo\" for his attention to detail and selfless dedication to the safety of the Queen."
             )
         )
     }
