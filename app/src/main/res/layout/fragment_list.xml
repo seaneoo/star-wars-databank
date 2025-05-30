@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".fragment.ListFragment">
 
+    <ImageView
+        android:id="@+id/wordmark"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/wordmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/button_add_item"
         android:layout_width="wrap_content"
@@ -21,12 +32,13 @@
     <ListView
         android:id="@+id/item_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         android:divider="@drawable/divider"
         android:dividerHeight="1px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_add_item" />
+        app:layout_constraintTop_toBottomOf="@+id/wordmark" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
