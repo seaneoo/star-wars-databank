@@ -31,10 +31,6 @@ class EditFragment : Fragment() {
 
         val entry = args.entry
 
-        binding.textViewEditItem.text = getString(R.string.edit_item, entry.name)
-        binding.editTextDescription.text =
-            Editable.Factory.getInstance().newEditable(entry.description)
-
         // Add logic to Back button
         binding.buttonBack.setOnClickListener {
             findNavController().navigate(
@@ -43,6 +39,10 @@ class EditFragment : Fragment() {
                 )
             )
         }
+
+        binding.textViewEditItem.text = getString(R.string.edit_item, entry.name)
+        binding.name?.text = Editable.Factory.getInstance().newEditable(entry.name)
+        binding.description?.text = Editable.Factory.getInstance().newEditable(entry.description)
 
         // Add logic to Save button
         // TODO: Actually save the item!

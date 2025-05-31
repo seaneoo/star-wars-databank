@@ -43,21 +43,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/editText_description"
-            style="@style/Theme.StarWarsDatabank.TextInputEditText"
+        <LinearLayout
+            android:id="@+id/ll_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:autofillHints=""
-            android:gravity="top|start"
-            android:hint="@string/item_description"
-            android:inputType="textMultiLine"
-            android:lines="4"
-            android:minLines="4"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_editItem"
-            tools:ignore="VisualLintTextFieldSize" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_editItem">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/name"
+                android:text="@string/item_name"
+                android:textColor="@color/md_theme_onBackground" />
+
+            <EditText
+                android:id="@+id/name"
+                style="@style/Theme.StarWarsDatabank.TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:autofillHints=""
+                android:gravity="top|start"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_name">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/description"
+                android:text="@string/item_description"
+                android:textColor="@color/md_theme_onBackground" />
+
+            <EditText
+                android:id="@+id/description"
+                style="@style/Theme.StarWarsDatabank.TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:autofillHints=""
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:lines="4"
+                android:minLines="4"
+                tools:ignore="VisualLintTextFieldSize" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/button_save_item"
@@ -67,7 +108,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/save_item"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText_description"
+            app:layout_constraintTop_toBottomOf="@+id/ll_description"
             tools:ignore="VisualLintButtonSize" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
