@@ -18,6 +18,10 @@
     <string name="item_name">Item name</string>
     <string name="item_description">Item description</string>
     <string name="save_item">Save Entry</string>
+    <string name="error">Error: %1$s</string>
+    <string name="category_required">category is required.</string>
+    <string name="name_required">name is required.</string>
+    <string name="description_required">description is required.</string>
     <string-array name="items">
         <item>Anakin Skywalker</item>
         <item>Padmé Amidala</item>

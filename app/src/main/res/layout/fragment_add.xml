@@ -134,6 +134,19 @@
                 tools:ignore="VisualLintTextFieldSize" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/error"
+            android:textAlignment="center"
+            android:textColor="@color/md_theme_error"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_description" />
+
         <Button
             android:id="@+id/button_add_item"
             style="@style/Widget.Material3.Button"
@@ -142,7 +155,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/add_item"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_description"
+            app:layout_constraintTop_toBottomOf="@+id/error_message"
             tools:ignore="VisualLintButtonSize" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
