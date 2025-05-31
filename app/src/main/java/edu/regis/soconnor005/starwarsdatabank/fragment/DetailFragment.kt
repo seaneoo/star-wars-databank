@@ -4,37 +4,58 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import edu.regis.soconnor005.starwarsdatabank.R
+import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
+import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
+import edu.regis.soconnor005.starwarsdatabank.data.getCategoryDrawableId
+import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
-    private val args by navArgs<DetailFragmentArgs>()
+    private var _binding: FragmentDetailBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val args by navArgs<DetailFragmentArgs>()
+    private val databankViewModel by activityViewModels<DatabankViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_detail, container, false)
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val entry = args.entry
-        view.findViewById<TextView>(R.id.item_category).text = entry.category
-        view.findViewById<TextView>(R.id.item_name).text = entry.name
-        view.findViewById<TextView>(R.id.item_description).text = entry.description
 
-        view.findViewById<ImageButton>(R.id.button_back).setOnClickListener {
+        // Determine which category icon to use
+        when (entry.category) {
+            EntryCategory.Character -> binding.itemCategoryIcon.setImageResource(R.drawable.character)
+            EntryCategory.Planet -> binding.itemCategoryIcon.setImageResource(R.drawable.planet)
+            EntryCategory.Vehicle -> binding.itemCategoryIcon.setImageResource(R.drawable.vehicle)
+        }
+
+        // Set the other item properties
+        binding.itemCategoryIcon.setImageResource(entry.getCategoryDrawableId())
+        binding.itemCategory.text = entry.category.name
+        binding.itemName.text = entry.name
+        binding.itemDescription.text = entry.description
+
+        // Add logic to Back button
+        binding.buttonBack.setOnClickListener {
             findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
         }
 
-        val buttonEdit = view.findViewById<ImageButton>(R.id.button_edit)
-        buttonEdit.contentDescription = getString(R.string.edit_item, entry)
-        buttonEdit.setOnClickListener {
+        // Add logic to Edit button
+        binding.buttonEdit.contentDescription = getString(R.string.edit_item, entry)
+        binding.buttonEdit.setOnClickListener {
             findNavController().navigate(
                 DetailFragmentDirections.actionDetailFragmentToEditFragment(
                     entry
@@ -42,6 +63,11 @@ class DetailFragment : Fragment() {
             )
         }
 
-        return view
+        // Add logic to Delete button
+        binding.buttonDelete.contentDescription = getString(R.string.delete_item, entry)
+        binding.buttonDelete.setOnClickListener {
+            databankViewModel.deleteEntry(entry.id)
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+        }
     }
 }
