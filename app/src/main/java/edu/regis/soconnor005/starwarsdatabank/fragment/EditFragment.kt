@@ -61,19 +61,25 @@ class EditFragment : Fragment() {
         }
     }
 
-    private fun buildNewEntry(oldEntry: Entry, name: EditText?, description: EditText?): Entry {
-        val newName = if (name != null && !name.text.toString().isBlank()) {
-            name.text.toString().trim()
+    private fun buildNewEntry(
+        oldEntry: Entry,
+        nameInput: EditText?,
+        nameDescription: EditText?,
+    ): Entry {
+        val name = if (nameInput != null && !nameInput.text.toString().isBlank()) {
+            nameInput.text.toString().trim()
         } else {
             oldEntry.name
         }
-        val newDescription = if (description != null && !description.text.toString().isBlank()) {
-            description.text.toString().trim()
-        } else {
-            oldEntry.description
-        }
-        val entry = oldEntry.copy(name = newName, description = newDescription)
-        return entry
+        val description =
+            if (nameDescription != null && !nameDescription.text.toString().isBlank()) {
+                nameDescription.text.toString().trim()
+            } else {
+                oldEntry.description
+            }
+
+        return oldEntry.copy(name = name, description = description)
+
     }
 
     private fun updateEntry(entry: Entry): Entry {
