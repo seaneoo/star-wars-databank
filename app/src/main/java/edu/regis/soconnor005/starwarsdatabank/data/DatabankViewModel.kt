@@ -64,7 +64,7 @@ class DatabankViewModel : ViewModel() {
         return entries
     }
 
-    fun getEntryById(id: UUID): Int {
+    fun getEntryIndexById(id: UUID): Int {
         val index = entries.indexOfFirst { it.id == id }
         if (index == -1) throw NoSuchElementException("could not find entry $id")
         Log.d(javaClass.simpleName, "located entry $id at index $index")
@@ -76,15 +76,16 @@ class DatabankViewModel : ViewModel() {
         Log.d(javaClass.simpleName, "adding entry ${entry.id}")
     }
 
-    fun updateEntry(previousEntryId: UUID, newEntry: Entry) {
-        if (previousEntryId == newEntry.id) throw InputMismatchException("previous entry id and new entry id do not match")
-        val index = getEntryById(previousEntryId)
+    fun updateEntry(previousEntryId: UUID, newEntry: Entry): Entry {
+        if (previousEntryId != newEntry.id) throw InputMismatchException("previous entry id and new entry id do not match")
+        val index = getEntryIndexById(previousEntryId)
         entries[index] = newEntry
         Log.d(javaClass.simpleName, "updating entry $previousEntryId")
+        return newEntry
     }
 
     fun deleteEntry(id: UUID) {
-        val index = getEntryById(id)
+        val index = getEntryIndexById(id)
         entries.removeAt(index)
         Log.d(javaClass.simpleName, "deleting entry $id")
     }
