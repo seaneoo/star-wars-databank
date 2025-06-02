@@ -61,7 +61,7 @@ class ListFragment : Fragment() {
 
             binding.itemList.setOnItemClickListener { _, _, position, _ ->
                 val item = entries[position]
-                val action = ListFragmentDirections.actionListFragmentToDetailFragment(item)
+                val action = ListFragmentDirections.actionListFragmentToDetailFragment(item.id)
                 navController.navigate(action)
             }
         }
