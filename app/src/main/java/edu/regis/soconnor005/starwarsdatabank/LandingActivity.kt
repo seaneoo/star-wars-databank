@@ -34,6 +34,6 @@ class LandingActivity : AppCompatActivity() {
         }
 
         val viewModel = ViewModelProvider(this)[DatabankViewModel::class]
-        viewModel.initData()
+        viewModel.initEntries()
     }
 }

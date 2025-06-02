@@ -66,7 +66,7 @@ class DetailFragment : Fragment() {
         // Add logic to Delete button
         binding.buttonDelete.contentDescription = getString(R.string.delete_item, entry)
         binding.buttonDelete.setOnClickListener {
-            databankViewModel.deleteEntry(entry.id)
+            databankViewModel.removeEntry(entry.id)
             findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
         }
     }

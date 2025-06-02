@@ -15,7 +15,6 @@ import edu.regis.soconnor005.starwarsdatabank.data.Entry
 import edu.regis.soconnor005.starwarsdatabank.data.getCategoryDrawable
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
 
-
 class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
@@ -35,35 +34,36 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val navController = findNavController()
-        val entriesArrayAdapter = object : ArrayAdapter<Entry>(
-            requireContext(), R.layout.list_item, R.id.title, viewModel.getEntries().toList()
-        ) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val adapterView = super.getView(position, convertView, parent)
-                val item = getItem(position)
-                if (item != null) {
-                    val title = adapterView.findViewById<TextView>(R.id.title)
-                    title.setCompoundDrawablesWithIntrinsicBounds(
-                        item.getCategoryDrawable(context), null, null, null
-                    )
-                    title.text = item.name
-
-//                    adapterView.findViewById<ImageView>(R.id.image).contentDescription = item.name
-//                    adapterView.findViewById<TextView>(R.id.subtitle).text = item.description
-                }
-                return adapterView
-            }
-        }
-
-        binding.itemList.adapter = entriesArrayAdapter
-        binding.itemList.setOnItemClickListener { _, _, position, _ ->
-            val item = viewModel.getEntries()[position]
-            val action = ListFragmentDirections.actionListFragmentToDetailFragment(item)
-            navController.navigate(action)
-        }
 
         binding.buttonAddItem.setOnClickListener {
             navController.navigate(ListFragmentDirections.actionListFragmentToAddFragment())
+        }
+
+        viewModel.entries.observe(viewLifecycleOwner) { entries ->
+            binding.itemList.adapter = object : ArrayAdapter<Entry>(
+                requireContext(), R.layout.list_item, R.id.title, entries.toList()
+            ) {
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val adapterView = super.getView(position, convertView, parent)
+                    val item = getItem(position)
+                    if (item != null) {
+                        val title = adapterView.findViewById<TextView>(R.id.title)
+                        title.setCompoundDrawablesWithIntrinsicBounds(
+                            item.getCategoryDrawable(
+                                context
+                            ), null, null, null
+                        )
+                        title.text = item.name
+                    }
+                    return adapterView
+                }
+            }
+
+            binding.itemList.setOnItemClickListener { _, _, position, _ ->
+                val item = entries[position]
+                val action = ListFragmentDirections.actionListFragmentToDetailFragment(item)
+                navController.navigate(action)
+            }
         }
     }
 
