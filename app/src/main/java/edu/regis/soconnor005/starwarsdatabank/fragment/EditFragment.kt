@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.Entry
@@ -57,14 +58,16 @@ class EditFragment : Fragment() {
 
             // Add logic to Save button
             binding.buttonSaveItem.setOnClickListener {
-                viewModel.updateEntry(
-                    args.id, buildNewEntry(entry, binding.name, binding.description)
-                )
-                findNavController().navigate(
-                    EditFragmentDirections.actionEditFragmentToDetailFragment(
-                        args.id
+                showSnackbar {
+                    viewModel.updateEntry(
+                        args.id, buildNewEntry(entry, binding.name, binding.description)
                     )
-                )
+                    findNavController().navigate(
+                        EditFragmentDirections.actionEditFragmentToDetailFragment(
+                            args.id
+                        )
+                    )
+                }
             }
         }
     }
@@ -83,5 +86,15 @@ class EditFragment : Fragment() {
         } else oldEntry.description
 
         return oldEntry.copy(name = name, description = description)
+    }
+
+    private fun showSnackbar(callback: () -> Unit) {
+        val snackbar = Snackbar.make(
+            binding.root, getString(R.string.save_these_changes), Snackbar.LENGTH_SHORT
+        )
+        snackbar.setAction(getString(R.string.yes)) {
+            callback()
+        }
+        snackbar.show()
     }
 }
