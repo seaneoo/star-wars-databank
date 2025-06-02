@@ -48,7 +48,7 @@ class DatabankViewModel : ViewModel() {
         Log.d(javaClass.simpleName, "Adding entry: ${entry.id}")
     }
 
-    fun updateEntry(previousId: UUID, entry: Entry): Entry {
+    fun updateEntry(previousId: UUID, entry: Entry) {
         if (previousId != entry.id) throw InputMismatchException("Previous entry ID and new entry ID do not match")
         val currentEntries = _entries.value ?: mutableListOf()
 
@@ -58,8 +58,6 @@ class DatabankViewModel : ViewModel() {
         currentEntries[index] = entry
         _entries.value = currentEntries
         Log.d(javaClass.simpleName, "Updating entry: $previousId")
-
-        return entry
     }
 
     fun removeEntry(id: UUID) {
