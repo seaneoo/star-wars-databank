@@ -7,8 +7,11 @@ import androidx.lifecycle.ViewModel
 import java.util.UUID
 
 class DatabankViewModel : ViewModel() {
+    // All entries in the "database"
     private val _entries = MutableLiveData<MutableList<Entry>>(mutableListOf())
-    private val _currentEntry = MutableLiveData<Entry?>(null)
+
+    // The current entry shown on the details screen
+    private val _currentEntry = MutableLiveData<Entry>()
 
     // Read-only access to live data _entries
     val entries: LiveData<MutableList<Entry>>
@@ -19,9 +22,15 @@ class DatabankViewModel : ViewModel() {
         }
 
     // Read-only access to live data _currentEntry
-    val currentEntry: LiveData<Entry?>
+    val currentEntry: LiveData<Entry>
         get() = _currentEntry
 
+    fun setCurrentItem(entry: Entry) {
+        _currentEntry.postValue(entry)
+        Log.d(javaClass.simpleName, "Set current item to: ${entry.id}")
+    }
+
+    // TODO: Migrate to a Room database
     @Suppress("SpellCheckingInspection")
     fun initEntries() {
         _entries.value = mutableListOf(
@@ -48,7 +57,7 @@ class DatabankViewModel : ViewModel() {
     fun addEntry(entry: Entry) {
         val currentEntries = _entries.value ?: mutableListOf()
         currentEntries.add(entry)
-        _entries.value = currentEntries
+        _entries.postValue(currentEntries)
         Log.d(javaClass.simpleName, "Adding entry: ${entry.id}")
     }
 
@@ -59,19 +68,20 @@ class DatabankViewModel : ViewModel() {
         if (index == -1) throw NoSuchElementException("Could not find entry by ID")
 
         currentEntries[index] = entry
+
         _entries.postValue(currentEntries)
         _currentEntry.postValue(entry)
+
         Log.d(javaClass.simpleName, "Updating entry: ${entry.id}")
     }
 
     fun removeEntry(id: UUID) {
         val currentEntries = _entries.value ?: mutableListOf()
-        currentEntries.removeIf { it.id == id }
-        _entries.value = currentEntries
-        Log.d(javaClass.simpleName, "Removing entry: $id")
-    }
-
-    fun setCurrentItem(id: UUID) {
-        _currentEntry.value = entries.value?.firstOrNull { it.id == id }
+        if (currentEntries.removeAll { it.id == id }) {
+            _entries.postValue(currentEntries)
+            Log.d(javaClass.simpleName, "Removing entry: $id")
+        } else {
+            Log.d(javaClass.simpleName, "Could not remove entry: $id")
+        }
     }
 }
