@@ -1,6 +1,7 @@
 package edu.regis.soconnor005.starwarsdatabank.fragment
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -59,6 +60,7 @@ class DetailFragment : Fragment() {
 
         // Add logic to Edit button
         binding.buttonEdit.setOnClickListener {
+            populateEditFields(viewModel.currentEntry.value!!)
             toggleEditPanel()
         }
 
@@ -84,6 +86,11 @@ class DetailFragment : Fragment() {
                 toggleEditPanel()
             }
         }
+    }
+
+    private fun populateEditFields(entry: Entry) {
+        binding.editName.text = Editable.Factory.getInstance().newEditable(entry.name)
+        binding.editDescription.text = Editable.Factory.getInstance().newEditable(entry.description)
     }
 
     private fun toggleEditPanel() {
