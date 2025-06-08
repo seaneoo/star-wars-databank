@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
@@ -119,4 +120,10 @@ class DetailFragment : Fragment() {
 @BindingAdapter("categoryIcon")
 fun setCategoryIcon(view: ImageView, category: EntryCategory) {
     view.setImageResource(category.drawableResource)
+    view.contentDescription = category.getName(view.context)
+}
+
+@BindingAdapter("categoryName")
+fun setCategoryName(view: TextView, category: EntryCategory) {
+    view.setText(category.stringResource)
 }
