@@ -118,5 +118,5 @@ class DetailFragment : Fragment() {
 @Suppress("unused")
 @BindingAdapter("categoryIcon")
 fun setCategoryIcon(view: ImageView, category: EntryCategory) {
-    view.setImageResource(category.drawable)
+    view.setImageResource(category.drawableResource)
 }

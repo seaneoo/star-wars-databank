@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.Entry
-import edu.regis.soconnor005.starwarsdatabank.data.getCategoryDrawable
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
@@ -43,9 +42,7 @@ class ListFragment : Fragment() {
                 if (item != null) {
                     val title = adapterView.findViewById<TextView>(R.id.title)
                     title.setCompoundDrawablesWithIntrinsicBounds(
-                        item.getCategoryDrawable(
-                            context
-                        ), null, null, null
+                        item.category.getDrawable(context), null, null, null
                     )
                     title.text = item.name
                 }
