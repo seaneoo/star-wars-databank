@@ -32,3 +32,4 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }

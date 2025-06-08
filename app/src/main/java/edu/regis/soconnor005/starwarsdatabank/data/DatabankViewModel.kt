@@ -4,19 +4,23 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.InputMismatchException
 import java.util.UUID
 
 class DatabankViewModel : ViewModel() {
     private val _entries = MutableLiveData<MutableList<Entry>>(mutableListOf())
+    private val _currentEntry = MutableLiveData<Entry?>(null)
 
-    // Read-only access to live data
+    // Read-only access to live data _entries
     val entries: LiveData<MutableList<Entry>>
         get() {
             val e = _entries
             Log.d(javaClass.simpleName, "Entries: ${e.value?.map { it.id }}")
             return e
         }
+
+    // Read-only access to live data _currentEntry
+    val currentEntry: LiveData<Entry?>
+        get() = _currentEntry
 
     @Suppress("SpellCheckingInspection")
     fun initEntries() {
@@ -48,16 +52,16 @@ class DatabankViewModel : ViewModel() {
         Log.d(javaClass.simpleName, "Adding entry: ${entry.id}")
     }
 
-    fun updateEntry(previousId: UUID, entry: Entry) {
-        if (previousId != entry.id) throw InputMismatchException("Previous entry ID and new entry ID do not match")
+    fun updateEntry(entry: Entry) {
         val currentEntries = _entries.value ?: mutableListOf()
 
-        val index = currentEntries.indexOfFirst { it.id == previousId }
+        val index = currentEntries.indexOfFirst { it.id == entry.id }
         if (index == -1) throw NoSuchElementException("Could not find entry by ID")
 
         currentEntries[index] = entry
-        _entries.value = currentEntries
-        Log.d(javaClass.simpleName, "Updating entry: $previousId")
+        _entries.postValue(currentEntries)
+        _currentEntry.postValue(entry)
+        Log.d(javaClass.simpleName, "Updating entry: ${entry.id}")
     }
 
     fun removeEntry(id: UUID) {
@@ -65,5 +69,9 @@ class DatabankViewModel : ViewModel() {
         currentEntries.removeIf { it.id == id }
         _entries.value = currentEntries
         Log.d(javaClass.simpleName, "Removing entry: $id")
+    }
+
+    fun setCurrentItem(id: UUID) {
+        _currentEntry.value = entries.value?.firstOrNull { it.id == id }
     }
 }

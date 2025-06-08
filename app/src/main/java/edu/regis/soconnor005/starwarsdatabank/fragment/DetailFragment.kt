@@ -1,14 +1,15 @@
 package edu.regis.soconnor005.starwarsdatabank.fragment
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.view.isGone
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -17,7 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.Entry
-import edu.regis.soconnor005.starwarsdatabank.data.getCategoryDrawableId
+import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -39,6 +40,16 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.setCurrentItem(args.id)
+
+        if (viewModel.currentEntry.value == null) {
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+            return
+        }
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         // Add logic to Back button
         binding.buttonBack.setOnClickListener {
             findNavController().navigate(
@@ -46,52 +57,33 @@ class DetailFragment : Fragment() {
             )
         }
 
-        viewModel.entries.observe(viewLifecycleOwner) { entries ->
-            val entry = entries.firstOrNull { it.id == args.id }
+        // Add logic to Edit button
+        binding.buttonEdit.setOnClickListener {
+            toggleEditPanel()
+        }
 
-            if (entry == null) {
-                findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
-                return@observe
-            }
+        // Add logic to Delete button
+        binding.buttonDelete.setOnClickListener {
+            viewModel.removeEntry(viewModel.currentEntry.value!!.id)
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+        }
 
-            binding.itemCategoryIcon.setImageResource(entry.getCategoryDrawableId())
-            binding.itemCategory.text = entry.category.name
-            binding.itemName.text = entry.name
-            binding.itemDescription.text = entry.description
+        // Add logic to edit close button
+        binding.editButtonClose.setOnClickListener {
+            toggleEditPanel()
+        }
 
-            // Add logic to Edit button
-            binding.buttonEdit.contentDescription = getString(R.string.edit_item)
-            binding.buttonEdit.setOnClickListener {
-                populateEditFields(entry)
-                toggleEditPanel()
-            }
-
-            // Add logic to Delete button
-            binding.buttonDelete.contentDescription = getString(R.string.delete_item, entry)
-            binding.buttonDelete.setOnClickListener {
-                viewModel.removeEntry(entry.id)
-            }
-
-            // Add logic to edit close button
-            binding.editButtonClose.setOnClickListener {
-                toggleEditPanel()
-            }
-
-            // Add logic to edit save button
-            binding.editButtonSave.setOnClickListener {
-                showSnackbar {
-                    viewModel.updateEntry(
-                        args.id, buildNewEntry(entry, binding.editName, binding.editDescription)
+        // Add logic to edit save button
+        binding.editButtonSave.setOnClickListener {
+            showSnackbar {
+                viewModel.updateEntry(
+                    buildNewEntry(
+                        viewModel.currentEntry.value!!, binding.editName, binding.editDescription
                     )
-                    toggleEditPanel()
-                }
+                )
+                toggleEditPanel()
             }
         }
-    }
-
-    private fun populateEditFields(entry: Entry) {
-        binding.editName.text = Editable.Factory.getInstance().newEditable(entry.name)
-        binding.editDescription.text = Editable.Factory.getInstance().newEditable(entry.description)
     }
 
     private fun toggleEditPanel() {
@@ -123,4 +115,10 @@ class DetailFragment : Fragment() {
 
         return oldEntry.copy(name = name, description = description)
     }
+}
+
+@Suppress("unused")
+@BindingAdapter("categoryIcon")
+fun setCategoryIcon(view: ImageView, category: EntryCategory) {
+    view.setImageResource(category.drawable)
 }
