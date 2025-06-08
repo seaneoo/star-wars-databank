@@ -25,8 +25,8 @@
             android:id="@+id/action_detail_fragment_to_list_fragment"
             app:destination="@id/list_fragment" />
         <argument
-            android:name="entry"
-            app:argType="edu.regis.soconnor005.starwarsdatabank.data.Entry" />
+            android:name="id"
+            app:argType="java.util.UUID" />
         <action
             android:id="@+id/action_detail_fragment_to_editFragment"
             app:destination="@id/editFragment" />
@@ -49,7 +49,10 @@
             android:id="@+id/action_editFragment_to_detail_fragment"
             app:destination="@id/detail_fragment" />
         <argument
-            android:name="entry"
-            app:argType="edu.regis.soconnor005.starwarsdatabank.data.Entry" />
+            android:name="id"
+            app:argType="java.util.UUID" />
+        <action
+            android:id="@+id/action_editFragment_to_list_fragment"
+            app:destination="@id/list_fragment" />
     </fragment>
 </navigation>

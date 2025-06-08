@@ -1,5 +1,7 @@
 package edu.regis.soconnor005.starwarsdatabank.data
 
-enum class EntryCategory {
-    Character, Planet, Vehicle
+import edu.regis.soconnor005.starwarsdatabank.R
+
+enum class EntryCategory(val drawable: Int) {
+    Character(R.drawable.character), Planet(R.drawable.planet), Vehicle(R.drawable.vehicle)
 }

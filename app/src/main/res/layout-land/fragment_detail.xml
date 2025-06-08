@@ -139,23 +139,22 @@
 
         <LinearLayout
             android:id="@+id/edit_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
+            android:layout_width="480dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="horizontal"
             android:visibility="gone">
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
                 android:background="@drawable/divider" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/md_theme_background"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="16dp">
+                android:padding="32dp">
 
                 <LinearLayout
                     android:id="@+id/edit_layout_name"
@@ -217,8 +216,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_layout_description">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <Button
                         android:id="@+id/edit_button_save"
