@@ -14,7 +14,6 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
@@ -26,7 +25,6 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val args by navArgs<DetailFragmentArgs>()
     private val viewModel by activityViewModels<DatabankViewModel>()
 
     override fun onCreateView(
@@ -40,13 +38,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.setCurrentItem(args.id)
-
-        if (viewModel.currentEntry.value == null) {
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
-            return
-        }
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner

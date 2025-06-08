@@ -35,35 +35,41 @@ class ListFragment : Fragment() {
 
         val navController = findNavController()
 
-        binding.buttonAddItem.setOnClickListener {
-            navController.navigate(ListFragmentDirections.actionListFragmentToAddFragment())
+        val adapter = object :
+            ArrayAdapter<Entry>(requireContext(), R.layout.list_item, R.id.title, mutableListOf()) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                val adapterView = super.getView(position, convertView, parent)
+                val item = getItem(position)
+                if (item != null) {
+                    val title = adapterView.findViewById<TextView>(R.id.title)
+                    title.setCompoundDrawablesWithIntrinsicBounds(
+                        item.getCategoryDrawable(
+                            context
+                        ), null, null, null
+                    )
+                    title.text = item.name
+                }
+                return adapterView
+            }
         }
+        binding.itemList.adapter = adapter
 
         viewModel.entries.observe(viewLifecycleOwner) { entries ->
-            binding.itemList.adapter = object : ArrayAdapter<Entry>(
-                requireContext(), R.layout.list_item, R.id.title, entries.toList()
-            ) {
-                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                    val adapterView = super.getView(position, convertView, parent)
-                    val item = getItem(position)
-                    if (item != null) {
-                        val title = adapterView.findViewById<TextView>(R.id.title)
-                        title.setCompoundDrawablesWithIntrinsicBounds(
-                            item.getCategoryDrawable(
-                                context
-                            ), null, null, null
-                        )
-                        title.text = item.name
-                    }
-                    return adapterView
-                }
-            }
+            adapter.clear()
+            adapter.addAll(entries)
+            adapter.notifyDataSetChanged()
+        }
 
-            binding.itemList.setOnItemClickListener { _, _, position, _ ->
-                val item = entries[position]
-                val action = ListFragmentDirections.actionListFragmentToDetailFragment(item.id)
-                navController.navigate(action)
+        binding.itemList.setOnItemClickListener { _, _, position, _ ->
+            val entry = adapter.getItem(position)
+            if (entry != null) {
+                viewModel.setCurrentItem(entry)
+                navController.navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
             }
+        }
+
+        binding.buttonAddItem.setOnClickListener {
+            navController.navigate(ListFragmentDirections.actionListFragmentToAddFragment())
         }
     }
 

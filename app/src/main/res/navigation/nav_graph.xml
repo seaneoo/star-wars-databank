@@ -24,9 +24,6 @@
         <action
             android:id="@+id/action_detail_fragment_to_list_fragment"
             app:destination="@id/list_fragment" />
-        <argument
-            android:name="id"
-            app:argType="java.util.UUID" />
         <action
             android:id="@+id/action_detail_fragment_to_editFragment"
             app:destination="@id/editFragment" />
