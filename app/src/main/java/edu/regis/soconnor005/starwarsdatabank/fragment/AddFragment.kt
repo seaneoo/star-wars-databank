@@ -1,6 +1,7 @@
 package edu.regis.soconnor005.starwarsdatabank.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,10 +42,11 @@ class AddFragment : Fragment() {
 
         // Populate the dropdown with our categories
         val categories = EntryCategory.entries.map { it.name }
-        val arrayAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, categories)
-        binding.category?.setText(categories[0])
-        binding.category?.setAdapter(arrayAdapter)
+        Log.d(javaClass.simpleName, "Categories: $categories")
+        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.simple_list_item, categories)
+        Log.d(javaClass.simpleName, "ArrayAdapter: $arrayAdapter")
+        binding.category.setText(categories[0])
+        binding.category.setAdapter(arrayAdapter)
 
         // Add logic to Add button
         binding.buttonAddItem.setOnClickListener {
