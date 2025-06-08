@@ -89,7 +89,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/md_theme_onBackground"
-                        tools:src="@tools:sample/avatars" />
+                        tools:src="@drawable/character" />
 
                     <TextView
                         android:id="@+id/item_category"
@@ -104,7 +104,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/item_category_icon"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@tools:sample/lorem" />
+                        tools:text="@string/ipsum" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -118,7 +118,7 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_category_wrapper"
-                    tools:text="@tools:sample/lorem" />
+                    tools:text="@string/ipsum" />
 
                 <TextView
                     android:id="@+id/item_description"
@@ -131,7 +131,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_name"
-                    tools:text="@tools:sample/lorem" />
+                    tools:text="@string/ipsum" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
