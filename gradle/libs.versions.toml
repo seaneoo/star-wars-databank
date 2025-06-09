@@ -36,4 +36,5 @@ room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+navigation = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
