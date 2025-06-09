@@ -57,4 +57,8 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
+    implementation(libs.room.runtime)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
 }
