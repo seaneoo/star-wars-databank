@@ -1,6 +1,8 @@
 package edu.regis.soconnor005.starwarsdatabank.data
 
+import android.content.SharedPreferences
 import android.util.Log
+import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,13 +15,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+const val PREFS_NAME = "databank_prefs"
+const val FIRST_RUN = "first_run"
+
 class DatabankViewModel(
+    private val preferences: SharedPreferences,
     private val entryDao: EntryDao,
     private val tag: String = "DatabankViewModel",
 ) : ViewModel() {
     val entries: StateFlow<List<Entry>> =
         entryDao.getAll().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-    
+
     private val _currentEntryId = MutableLiveData<Int?>(null)
 
     val currentEntry: LiveData<Entry?> = _currentEntryId.switchMap { id ->
@@ -36,27 +42,36 @@ class DatabankViewModel(
 
     @Suppress("SpellCheckingInspection")
     private fun initEntries() {
-        viewModelScope.launch {
-            entryDao.deleteAll() // TODO: Temporary, database should be persisted
-            entryDao.insertAll(
-                Entry(
-                    category = EntryCategory.Character,
-                    name = "Anakin Skywalker",
-                    description = "Discovered as a slave on Tatooine by Qui-Gon Jinn and Obi-Wan Kenobi, Anakin Skywalker had the potential to become one of the most powerful Jedi ever."
-                ), Entry(
-                    category = EntryCategory.Character,
-                    name = "Padmé Amidala",
-                    description = "Padmé Amidala was a courageous, hopeful leader, serving as Queen and then Senator of Naboo -- and was also handy with a blaster."
-                ), Entry(
-                    category = EntryCategory.Planet,
-                    name = "Naboo",
-                    description = "An idyllic world close to the border of the Outer Rim Territories, Naboo is inhabited by peaceful humans known as the Naboo, and an indigenous species of intelligent amphibians called the Gungans."
-                ), Entry(
-                    category = EntryCategory.Vehicle,
-                    name = "Naboo N-1 Starfighter",
-                    description = "Protecting the skies and space around Naboo is the N-1 starfighter. Its sleek design exemplifies the philosophy of art and function witnessed throughout Naboo technology."
+        val isFirstRun = preferences.getBoolean(FIRST_RUN, true)
+
+        if (isFirstRun) {
+            Log.d(tag, "First run, initializing database")
+            viewModelScope.launch {
+                entryDao.insertAll(
+                    Entry(
+                        category = EntryCategory.Character,
+                        name = "Anakin Skywalker",
+                        description = "Discovered as a slave on Tatooine by Qui-Gon Jinn and Obi-Wan Kenobi, Anakin Skywalker had the potential to become one of the most powerful Jedi ever."
+                    ), Entry(
+                        category = EntryCategory.Character,
+                        name = "Padmé Amidala",
+                        description = "Padmé Amidala was a courageous, hopeful leader, serving as Queen and then Senator of Naboo -- and was also handy with a blaster."
+                    ), Entry(
+                        category = EntryCategory.Planet,
+                        name = "Naboo",
+                        description = "An idyllic world close to the border of the Outer Rim Territories, Naboo is inhabited by peaceful humans known as the Naboo, and an indigenous species of intelligent amphibians called the Gungans."
+                    ), Entry(
+                        category = EntryCategory.Vehicle,
+                        name = "Naboo N-1 Starfighter",
+                        description = "Protecting the skies and space around Naboo is the N-1 starfighter. Its sleek design exemplifies the philosophy of art and function witnessed throughout Naboo technology."
+                    )
                 )
-            )
+
+                preferences.edit {
+                    putBoolean(FIRST_RUN, false)
+                    apply()
+                }
+            }
         }
     }
 
