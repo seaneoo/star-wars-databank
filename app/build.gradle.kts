@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.navigation)
     alias(libs.plugins.kapt)
 }
 
@@ -13,8 +13,8 @@ android {
         applicationId = "edu.regis.soconnor005.starwarsdatabank"
         minSdk = 31
         targetSdk = 35
-        versionCode = 2
-        versionName = "2025.06.08"
+        versionCode = 3
+        versionName = "2025.06.15"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -35,6 +35,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         viewBinding = true
         //noinspection DataBindingWithoutKapt
         dataBinding = true
@@ -56,4 +57,8 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
+    implementation(libs.room.runtime)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
 }

@@ -1,7 +1,6 @@
 package edu.regis.soconnor005.starwarsdatabank.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
-import edu.regis.soconnor005.starwarsdatabank.data.Entry
 import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
+import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentAddBinding
 
 class AddFragment : Fragment() {
@@ -41,12 +40,10 @@ class AddFragment : Fragment() {
         }
 
         // Populate the dropdown with our categories
-        val categories = EntryCategory.entries.map { it.name }
-        Log.d(javaClass.simpleName, "Categories: $categories")
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.simple_list_item, categories)
-        Log.d(javaClass.simpleName, "ArrayAdapter: $arrayAdapter")
-        binding.category.setText(categories[0])
-        binding.category.setAdapter(arrayAdapter)
+        val categories = EntryCategory.entries.map { it.getName(view.context) }
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_list_item, categories)
+        binding.category.setText(categories.first())
+        binding.category.setAdapter(adapter)
 
         // Add logic to Add button
         binding.buttonAddItem.setOnClickListener {
@@ -65,14 +62,14 @@ class AddFragment : Fragment() {
     ): Entry? {
         var error = false
 
-        val category = if (categoryInput != null && !categoryInput.text.toString().isBlank()) {
-            EntryCategory.valueOf(categoryInput.text.toString())
+        val category = if (categoryInput != null && categoryInput.text.toString().isNotBlank()) {
+            EntryCategory.fromName(requireContext(), categoryInput.text.toString())
         } else {
             error = true
             displayError(getString(R.string.category_required))
             null
         }
-        val name = if (nameInput != null && !nameInput.text.toString().isBlank()) {
+        val name = if (nameInput != null && nameInput.text.toString().isNotBlank()) {
             nameInput.text.toString().trim()
         } else {
             error = true
@@ -80,7 +77,7 @@ class AddFragment : Fragment() {
             null
         }
         val description =
-            if (descriptionInput != null && !descriptionInput.text.toString().isBlank()) {
+            if (descriptionInput != null && descriptionInput.text.toString().isNotBlank()) {
                 descriptionInput.text.toString().trim()
             } else {
                 error = true
@@ -94,7 +91,7 @@ class AddFragment : Fragment() {
     }
 
     private fun displayError(message: String) {
-        binding.errorMessage?.let {
+        binding.errorMessage.let {
             it.visibility = View.VISIBLE
             it.text = getString(R.string.error, message)
         }

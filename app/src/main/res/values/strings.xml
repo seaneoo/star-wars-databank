@@ -25,4 +25,7 @@
     <string name="yes">Yes</string>
     <string name="save_these_changes">Save these changes?</string>
     <string name="close">Close</string>
+    <string name="character">Character</string>
+    <string name="planet">Planet</string>
+    <string name="vehicle">Vehicle</string>
 </resources>

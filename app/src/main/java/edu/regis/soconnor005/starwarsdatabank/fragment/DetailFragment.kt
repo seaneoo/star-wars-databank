@@ -9,24 +9,23 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
-import edu.regis.soconnor005.starwarsdatabank.data.Entry
 import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
+import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val args by navArgs<DetailFragmentArgs>()
     private val viewModel by activityViewModels<DatabankViewModel>()
 
     override fun onCreateView(
@@ -40,13 +39,6 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.setCurrentItem(args.id)
-
-        if (viewModel.currentEntry.value == null) {
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
-            return
-        }
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
@@ -66,8 +58,10 @@ class DetailFragment : Fragment() {
 
         // Add logic to Delete button
         binding.buttonDelete.setOnClickListener {
-            viewModel.removeEntry(viewModel.currentEntry.value!!.id)
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+            viewModel.currentEntry.value?.let {
+                viewModel.removeEntry(it)
+                findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+            }
         }
 
         // Add logic to edit close button
@@ -126,6 +120,16 @@ class DetailFragment : Fragment() {
 
 @Suppress("unused")
 @BindingAdapter("categoryIcon")
-fun setCategoryIcon(view: ImageView, category: EntryCategory) {
-    view.setImageResource(category.drawable)
+fun setCategoryIcon(view: ImageView, category: EntryCategory?) {
+    if (category != null) {
+        view.setImageResource(category.drawableResource)
+        view.contentDescription = category.getName(view.context)
+    }
+}
+
+@BindingAdapter("categoryName")
+fun setCategoryName(view: TextView, category: EntryCategory?) {
+    if (category != null) {
+        view.setText(category.stringResource)
+    }
 }
