@@ -9,6 +9,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.ViewModelProvider
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
+import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModelFactory
+import edu.regis.soconnor005.starwarsdatabank.database.DatabankDatabase
 
 class LandingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,8 @@ class LandingActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        val viewModel = ViewModelProvider(this)[DatabankViewModel::class]
-        viewModel.initEntries()
+        val entryDao = DatabankDatabase.getInstance(application).entryDao
+        val viewModelFactory = DatabankViewModelFactory(entryDao)
+        ViewModelProvider(this, viewModelFactory)[DatabankViewModel::class]
     }
 }

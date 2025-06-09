@@ -18,8 +18,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
-import edu.regis.soconnor005.starwarsdatabank.data.Entry
 import edu.regis.soconnor005.starwarsdatabank.data.EntryCategory
+import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
@@ -58,8 +58,10 @@ class DetailFragment : Fragment() {
 
         // Add logic to Delete button
         binding.buttonDelete.setOnClickListener {
-            viewModel.removeEntry(viewModel.currentEntry.value!!.id)
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+            viewModel.currentEntry.value?.let {
+                viewModel.removeEntry(it)
+                findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToListFragment())
+            }
         }
 
         // Add logic to edit close button
@@ -118,12 +120,16 @@ class DetailFragment : Fragment() {
 
 @Suppress("unused")
 @BindingAdapter("categoryIcon")
-fun setCategoryIcon(view: ImageView, category: EntryCategory) {
-    view.setImageResource(category.drawableResource)
-    view.contentDescription = category.getName(view.context)
+fun setCategoryIcon(view: ImageView, category: EntryCategory?) {
+    if (category != null) {
+        view.setImageResource(category.drawableResource)
+        view.contentDescription = category.getName(view.context)
+    }
 }
 
 @BindingAdapter("categoryName")
-fun setCategoryName(view: TextView, category: EntryCategory) {
-    view.setText(category.stringResource)
+fun setCategoryName(view: TextView, category: EntryCategory?) {
+    if (category != null) {
+        view.setText(category.stringResource)
+    }
 }

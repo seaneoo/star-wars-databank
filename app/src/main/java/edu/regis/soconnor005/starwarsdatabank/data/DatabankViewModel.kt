@@ -4,84 +4,97 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.UUID
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import edu.regis.soconnor005.starwarsdatabank.database.Entry
+import edu.regis.soconnor005.starwarsdatabank.database.EntryDao
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class DatabankViewModel : ViewModel() {
-    // All entries in the "database"
-    private val _entries = MutableLiveData<MutableList<Entry>>(mutableListOf())
+class DatabankViewModel(
+    private val entryDao: EntryDao,
+    private val tag: String = "DatabankViewModel",
+) : ViewModel() {
+    val entries: StateFlow<List<Entry>> =
+        entryDao.getAll().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    
+    private val _currentEntryId = MutableLiveData<Int?>(null)
 
-    // The current entry shown on the details screen
-    private val _currentEntry = MutableLiveData<Entry>()
-
-    // Read-only access to live data _entries
-    val entries: LiveData<MutableList<Entry>>
-        get() {
-            val e = _entries
-            Log.d(javaClass.simpleName, "Entries: ${e.value?.map { it.id }}")
-            return e
+    val currentEntry: LiveData<Entry?> = _currentEntryId.switchMap { id ->
+        if (id == null) {
+            MutableLiveData(null)
+        } else {
+            entryDao.getById(id)
         }
-
-    // Read-only access to live data _currentEntry
-    val currentEntry: LiveData<Entry>
-        get() = _currentEntry
-
-    fun setCurrentItem(entry: Entry) {
-        _currentEntry.postValue(entry)
-        Log.d(javaClass.simpleName, "Set current item to: ${entry.id}")
     }
 
-    // TODO: Migrate to a Room database
+    init {
+        initEntries()
+    }
+
     @Suppress("SpellCheckingInspection")
-    fun initEntries() {
-        _entries.value = mutableListOf(
-            Entry(
-                category = EntryCategory.Character,
-                name = "Anakin Skywalker",
-                description = "Discovered as a slave on Tatooine by Qui-Gon Jinn and Obi-Wan Kenobi, Anakin Skywalker had the potential to become one of the most powerful Jedi ever."
-            ), Entry(
-                category = EntryCategory.Character,
-                name = "Padmé Amidala",
-                description = "Padmé Amidala was a courageous, hopeful leader, serving as Queen and then Senator of Naboo -- and was also handy with a blaster."
-            ), Entry(
-                category = EntryCategory.Planet,
-                name = "Naboo",
-                description = "An idyllic world close to the border of the Outer Rim Territories, Naboo is inhabited by peaceful humans known as the Naboo, and an indigenous species of intelligent amphibians called the Gungans."
-            ), Entry(
-                category = EntryCategory.Vehicle,
-                name = "Naboo N-1 Starfighter",
-                description = "Protecting the skies and space around Naboo is the N-1 starfighter. Its sleek design exemplifies the philosophy of art and function witnessed throughout Naboo technology."
+    private fun initEntries() {
+        viewModelScope.launch {
+            entryDao.deleteAll() // TODO: Temporary, database should be persisted
+            entryDao.insertAll(
+                Entry(
+                    category = EntryCategory.Character,
+                    name = "Anakin Skywalker",
+                    description = "Discovered as a slave on Tatooine by Qui-Gon Jinn and Obi-Wan Kenobi, Anakin Skywalker had the potential to become one of the most powerful Jedi ever."
+                ), Entry(
+                    category = EntryCategory.Character,
+                    name = "Padmé Amidala",
+                    description = "Padmé Amidala was a courageous, hopeful leader, serving as Queen and then Senator of Naboo -- and was also handy with a blaster."
+                ), Entry(
+                    category = EntryCategory.Planet,
+                    name = "Naboo",
+                    description = "An idyllic world close to the border of the Outer Rim Territories, Naboo is inhabited by peaceful humans known as the Naboo, and an indigenous species of intelligent amphibians called the Gungans."
+                ), Entry(
+                    category = EntryCategory.Vehicle,
+                    name = "Naboo N-1 Starfighter",
+                    description = "Protecting the skies and space around Naboo is the N-1 starfighter. Its sleek design exemplifies the philosophy of art and function witnessed throughout Naboo technology."
+                )
             )
-        )
+        }
+    }
+
+    fun setCurrentItem(id: Int) {
+        _currentEntryId.value = id
+        Log.d(tag, "Set current item to: $id")
     }
 
     fun addEntry(entry: Entry) {
-        val currentEntries = _entries.value ?: mutableListOf()
-        currentEntries.add(entry)
-        _entries.postValue(currentEntries)
-        Log.d(javaClass.simpleName, "Adding entry: ${entry.id}")
+        viewModelScope.launch {
+            try {
+                entryDao.insert(entry)
+                Log.d(tag, "Adding entry: ${entry.id}")
+            } catch (e: Exception) {
+                Log.e(tag, "Could not add entry: ${entry.id}", e)
+            }
+        }
     }
 
     fun updateEntry(entry: Entry) {
-        val currentEntries = _entries.value ?: mutableListOf()
-
-        val index = currentEntries.indexOfFirst { it.id == entry.id }
-        if (index == -1) throw NoSuchElementException("Could not find entry by ID")
-
-        currentEntries[index] = entry
-
-        _entries.postValue(currentEntries)
-        _currentEntry.postValue(entry)
-
-        Log.d(javaClass.simpleName, "Updating entry: ${entry.id}")
+        viewModelScope.launch {
+            try {
+                entryDao.update(entry)
+                Log.d(tag, "Updating entry: ${entry.id}")
+            } catch (e: Exception) {
+                Log.e(tag, "Could not update entry: ${entry.id}", e)
+            }
+        }
     }
 
-    fun removeEntry(id: UUID) {
-        val currentEntries = _entries.value ?: mutableListOf()
-        if (currentEntries.removeAll { it.id == id }) {
-            _entries.postValue(currentEntries)
-            Log.d(javaClass.simpleName, "Removing entry: $id")
-        } else {
-            Log.d(javaClass.simpleName, "Could not remove entry: $id")
+    fun removeEntry(entry: Entry) {
+        viewModelScope.launch {
+            try {
+                entryDao.delete(entry)
+                Log.d(tag, "Deleting entry: ${entry.id}")
+            } catch (e: Exception) {
+                Log.e(tag, "Could not delete entry: ${entry.id}", e)
+            }
         }
     }
 }

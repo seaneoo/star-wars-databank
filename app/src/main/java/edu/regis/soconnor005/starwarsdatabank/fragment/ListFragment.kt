@@ -8,11 +8,15 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
-import edu.regis.soconnor005.starwarsdatabank.data.Entry
+import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
+import kotlinx.coroutines.launch
 
 class ListFragment : Fragment() {
     private var _binding: FragmentListBinding? = null
@@ -51,16 +55,20 @@ class ListFragment : Fragment() {
         }
         binding.itemList.adapter = adapter
 
-        viewModel.entries.observe(viewLifecycleOwner) { entries ->
-            adapter.clear()
-            adapter.addAll(entries)
-            adapter.notifyDataSetChanged()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.entries.collect { entries ->
+                    adapter.clear()
+                    adapter.addAll(entries)
+                    adapter.notifyDataSetChanged()
+                }
+            }
         }
 
         binding.itemList.setOnItemClickListener { _, _, position, _ ->
             val entry = adapter.getItem(position)
             if (entry != null) {
-                viewModel.setCurrentItem(entry)
+                viewModel.setCurrentItem(entry.id)
                 navController.navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
             }
         }
