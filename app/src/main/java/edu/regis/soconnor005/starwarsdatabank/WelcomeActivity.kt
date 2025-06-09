@@ -51,7 +51,8 @@ class WelcomeActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        findViewById<TextView>(R.id.textView_version).text = getString(R.string.version, "1.0.0")
+        findViewById<TextView>(R.id.textView_version).text =
+            getString(R.string.version, BuildConfig.VERSION_NAME)
         findViewById<TextView>(R.id.textView_author).text =
             getString(R.string.author, "Sean O'Connor")
 
