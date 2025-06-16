@@ -9,9 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.data.ItemListAdapter
+import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
 import kotlinx.coroutines.launch
 
@@ -38,10 +40,9 @@ class ListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.entries.collect { entries ->
-                    binding.itemList.adapter = ItemListAdapter(entries, onClickListener = { entry ->
-                        viewModel.setCurrentItem(entry.id)
-                        navController.navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
-                    })
+                    binding.itemList.adapter = ItemListAdapter(
+                        entries,
+                        onClickListener = { entry -> adapterOnClick(navController, entry) })
                 }
             }
         }
@@ -54,5 +55,10 @@ class ListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun adapterOnClick(navController: NavController, entry: Entry) {
+        viewModel.setCurrentItem(entry.id)
+        navController.navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
     }
 }
