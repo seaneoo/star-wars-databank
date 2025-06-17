@@ -1,4 +1,4 @@
-package edu.regis.soconnor005.starwarsdatabank.fragment
+package edu.regis.soconnor005.starwarsdatabank.fragment.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
-import edu.regis.soconnor005.starwarsdatabank.data.ItemListAdapter
 import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
 import kotlinx.coroutines.launch
@@ -40,7 +39,7 @@ class ListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.entries.collect { entries ->
-                    binding.itemList.adapter = ItemListAdapter(
+                    binding.itemList.adapter = EntryListAdapter(
                         entries,
                         onClickListener = { entry -> adapterOnClick(navController, entry) })
                 }
