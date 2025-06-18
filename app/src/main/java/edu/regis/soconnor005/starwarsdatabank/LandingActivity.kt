@@ -1,6 +1,5 @@
 package edu.regis.soconnor005.starwarsdatabank
 
-import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
@@ -42,7 +41,7 @@ class LandingActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        val preferences = applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val preferences = applicationContext.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         val entryDao = DatabankDatabase.getInstance(application).entryDao
         val viewModelFactory = DatabankViewModelFactory(preferences, entryDao)
         ViewModelProvider(this, viewModelFactory)[DatabankViewModel::class]
