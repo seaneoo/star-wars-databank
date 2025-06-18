@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/list_fragment">
-
     <fragment
         android:id="@+id/list_fragment"
-        android:name="edu.regis.soconnor005.starwarsdatabank.fragment.ListFragment"
+        android:name="edu.regis.soconnor005.starwarsdatabank.fragment.list.ListFragment"
         android:label="ListFragment">
         <action
             android:id="@+id/action_list_fragment_to_detail_fragment"
@@ -16,7 +15,6 @@
             android:id="@+id/action_list_fragment_to_addFragment"
             app:destination="@id/addFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/detail_fragment"
         android:name="edu.regis.soconnor005.starwarsdatabank.fragment.DetailFragment"
@@ -24,9 +22,6 @@
         <action
             android:id="@+id/action_detail_fragment_to_list_fragment"
             app:destination="@id/list_fragment" />
-        <action
-            android:id="@+id/action_detail_fragment_to_editFragment"
-            app:destination="@id/editFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -35,21 +30,6 @@
         tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_list_fragment"
-            app:destination="@id/list_fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/editFragment"
-        android:name="edu.regis.soconnor005.starwarsdatabank.fragment.EditFragment"
-        android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit">
-        <action
-            android:id="@+id/action_editFragment_to_detail_fragment"
-            app:destination="@id/detail_fragment" />
-        <argument
-            android:name="id"
-            app:argType="java.util.UUID" />
-        <action
-            android:id="@+id/action_editFragment_to_list_fragment"
             app:destination="@id/list_fragment" />
     </fragment>
 </navigation>

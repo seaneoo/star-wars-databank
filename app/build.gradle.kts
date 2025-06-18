@@ -12,9 +12,10 @@ android {
     defaultConfig {
         applicationId = "edu.regis.soconnor005.starwarsdatabank"
         minSdk = 31
+        //noinspection OldTargetApi
         targetSdk = 35
-        versionCode = 3
-        versionName = "2025.06.15"
+        versionCode = 4
+        versionName = "2025.06.22"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

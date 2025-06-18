@@ -1,18 +1,16 @@
-package edu.regis.soconnor005.starwarsdatabank.fragment
+package edu.regis.soconnor005.starwarsdatabank.fragment.list
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import edu.regis.soconnor005.starwarsdatabank.R
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
@@ -38,38 +36,15 @@ class ListFragment : Fragment() {
 
         val navController = findNavController()
 
-        val adapter = object :
-            ArrayAdapter<Entry>(requireContext(), R.layout.list_item, R.id.title, mutableListOf()) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val adapterView = super.getView(position, convertView, parent)
-                val item = getItem(position)
-                if (item != null) {
-                    val title = adapterView.findViewById<TextView>(R.id.title)
-                    title.setCompoundDrawablesWithIntrinsicBounds(
-                        item.category.getDrawable(context), null, null, null
-                    )
-                    title.text = item.name
-                }
-                return adapterView
-            }
-        }
+        val adapter =
+            EntryListAdapter(onClickListener = { entry -> adapterOnClick(navController, entry) })
         binding.itemList.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.entries.collect { entries ->
-                    adapter.clear()
-                    adapter.addAll(entries)
-                    adapter.notifyDataSetChanged()
+                    adapter.submitList(entries)
                 }
-            }
-        }
-
-        binding.itemList.setOnItemClickListener { _, _, position, _ ->
-            val entry = adapter.getItem(position)
-            if (entry != null) {
-                viewModel.setCurrentItem(entry.id)
-                navController.navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
             }
         }
 
@@ -81,5 +56,10 @@ class ListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun adapterOnClick(navController: NavController, entry: Entry) {
+        viewModel.setCurrentItem(entry.id)
+        navController.navigate(ListFragmentDirections.actionListFragmentToDetailFragment())
     }
 }

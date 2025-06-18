@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Star Wars Databank</string>
+    <string name="app_name" translatable="false">Databank</string>
     <string name="ipsum" translatable="false">Lorem Ipsum</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
