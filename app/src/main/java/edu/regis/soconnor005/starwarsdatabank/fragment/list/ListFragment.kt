@@ -36,12 +36,14 @@ class ListFragment : Fragment() {
 
         val navController = findNavController()
 
+        val adapter =
+            EntryListAdapter(onClickListener = { entry -> adapterOnClick(navController, entry) })
+        binding.itemList.adapter = adapter
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.entries.collect { entries ->
-                    binding.itemList.adapter = EntryListAdapter(
-                        entries,
-                        onClickListener = { entry -> adapterOnClick(navController, entry) })
+                    adapter.submitList(entries)
                 }
             }
         }
