@@ -3,26 +3,29 @@ package edu.regis.soconnor005.starwarsdatabank
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import edu.regis.soconnor005.starwarsdatabank.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+    private var _binding: ActivityLoginBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        setContentView(R.layout.activity_login)
+        _binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         /**
          * Modified the default insets code
          * https://developer.android.com/develop/ui/views/layout/edge-to-edge
          */
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_login)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars =
                 insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
@@ -37,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         /**
          * Add functionality to back button.
          */
-        findViewById<ImageButton>(R.id.button_back).setOnClickListener {
+        binding.buttonBack.setOnClickListener {
             val welcomeActivity = Intent(this, WelcomeActivity::class.java)
             startActivity(welcomeActivity)
         }
@@ -46,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
          * For now we just let the user go to the landing screen
          * without logging in.
          */
-        findViewById<Button>(R.id.button_login).setOnClickListener {
+        binding.buttonLogin.setOnClickListener {
             val landingActivity = Intent(this, LandingActivity::class.java)
             startActivity(landingActivity)
             finish()
