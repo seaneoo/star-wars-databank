@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.navigation) apply false
     alias(libs.plugins.kapt) apply false
+    alias(libs.plugins.gms) apply false
 }
 
 buildscript {

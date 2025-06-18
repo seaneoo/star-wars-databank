@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.navigation)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.gms)
 }
 
 android {
@@ -62,4 +63,6 @@ dependencies {
     //noinspection KaptUsageInsteadOfKsp
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
 }
