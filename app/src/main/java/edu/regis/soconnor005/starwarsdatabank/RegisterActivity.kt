@@ -8,7 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
+import edu.regis.soconnor005.starwarsdatabank.auth.AuthService
 import edu.regis.soconnor005.starwarsdatabank.databinding.ActivityRegisterBinding
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.ErrorDialogFragment
+import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
     private var _binding: ActivityRegisterBinding? = null
@@ -46,13 +50,24 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         /**
-         * For now we just let the user go to the landing screen
-         * without registering.
+         * Add functionality to the register button.
+         * Attempts to create an account with Firebase.
          */
         binding.buttonRegister.setOnClickListener {
-            val landingActivity = Intent(this, LandingActivity::class.java)
-            startActivity(landingActivity)
-            finish()
+            lifecycleScope.launch {
+                try {
+                    AuthService.createAccount(
+                        binding.email.text.toString(), binding.password.text.toString()
+                    )
+                    val landingActivity = Intent(this@RegisterActivity, LandingActivity::class.java)
+                    startActivity(landingActivity)
+                    finish()
+                } catch (e: Exception) {
+                    ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                        supportFragmentManager, "REGISTER_ERROR_DIALOG"
+                    )
+                }
+            }
         }
     }
 }

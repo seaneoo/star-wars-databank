@@ -5,9 +5,8 @@
     <string name="register">Register</string>
     <string name="version">Version %1$s</string>
     <string name="author">Made by %1$s</string>
-    <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="confirm_password">Confirm password</string>
     <string name="_continue">Continue</string>
     <string name="back">Back</string>
     <string name="forgot_username_password">Forgot username or password?</string>

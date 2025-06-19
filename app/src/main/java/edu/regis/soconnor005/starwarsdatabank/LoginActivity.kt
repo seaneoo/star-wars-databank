@@ -8,7 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
+import edu.regis.soconnor005.starwarsdatabank.auth.AuthService
 import edu.regis.soconnor005.starwarsdatabank.databinding.ActivityLoginBinding
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.ErrorDialogFragment
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private var _binding: ActivityLoginBinding? = null
@@ -46,13 +50,24 @@ class LoginActivity : AppCompatActivity() {
         }
 
         /**
-         * For now we just let the user go to the landing screen
-         * without logging in.
+         * Add functionality to the login button.
+         * Attempts to sign into the Firebase account.
          */
         binding.buttonLogin.setOnClickListener {
-            val landingActivity = Intent(this, LandingActivity::class.java)
-            startActivity(landingActivity)
-            finish()
+            lifecycleScope.launch {
+                try {
+                    AuthService.signIn(
+                        binding.email.text.toString(), binding.password.text.toString()
+                    )
+                    val landingActivity = Intent(this@LoginActivity, LandingActivity::class.java)
+                    startActivity(landingActivity)
+                    finish()
+                } catch (e: Exception) {
+                    ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                        supportFragmentManager, "LOGIN_ERROR_DIALOG"
+                    )
+                }
+            }
         }
     }
 }
