@@ -69,5 +69,23 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+
+        /**
+         * Add functionality to the Forgot Password button.
+         */
+        binding.buttonForgotPassword.setOnClickListener {
+            lifecycleScope.launch {
+                try {
+                    AuthService.forgotPassword(binding.email.text.toString())
+                    ErrorDialogFragment("Password reset email sent").show(
+                        supportFragmentManager, "PASSWORD_RESET_DIALOG"
+                    )
+                } catch (e: Exception) {
+                    ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                        supportFragmentManager, "LOGIN_ERROR_DIALOG"
+                    )
+                }
+            }
+        }
     }
 }

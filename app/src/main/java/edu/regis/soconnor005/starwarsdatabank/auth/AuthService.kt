@@ -34,6 +34,10 @@ object AuthService {
         Firebase.auth.signInWithEmailAndPassword(email, password).await()
     }
 
+    suspend fun forgotPassword(email: String) {
+        Firebase.auth.sendPasswordResetEmail(email).await()
+    }
+
     fun signOut() {
         Firebase.auth.signOut()
     }

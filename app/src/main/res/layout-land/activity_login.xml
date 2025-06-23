@@ -81,12 +81,12 @@
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
         <Button
-            android:id="@+id/button_forgotUsernamePassword"
+            android:id="@+id/button_forgot_password"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/forgot_username_password"
+            android:text="@string/forgot_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_login"
