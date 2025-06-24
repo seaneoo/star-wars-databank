@@ -18,6 +18,7 @@ import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
 import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.ErrorDialogFragment
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.SignOutDialogFragment
 import kotlinx.coroutines.launch
 
 class ListFragment : Fragment() {
@@ -57,20 +58,24 @@ class ListFragment : Fragment() {
         }
 
         binding.buttonSignOut.setOnClickListener {
-            lifecycleScope.launch {
-                try {
-                    AuthService.signOut()
-                    val welcomeActivity = Intent(context, WelcomeActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            SignOutDialogFragment {
+                lifecycleScope.launch {
+                    try {
+                        AuthService.signOut()
+                        val welcomeActivity = Intent(context, WelcomeActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        startActivity(welcomeActivity)
+                        requireActivity().finish()
+                    } catch (e: Exception) {
+                        ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                            parentFragmentManager, "SIGN_OUT_ERROR_DIALOG"
+                        )
                     }
-                    startActivity(welcomeActivity)
-                    requireActivity().finish()
-                } catch (e: Exception) {
-                    ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
-                        parentFragmentManager, "SIGN_OUT_ERROR_DIALOG"
-                    )
                 }
-            }
+            }.show(
+                parentFragmentManager, "SIGN_OUT_PROMPT_DIALOG"
+            )
         }
     }
 

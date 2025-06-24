@@ -22,10 +22,12 @@
     <string name="name_required">name is required.</string>
     <string name="description_required">description is required.</string>
     <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="save_these_changes">Save these changes?</string>
     <string name="close">Close</string>
     <string name="character">Character</string>
     <string name="planet">Planet</string>
     <string name="vehicle">Vehicle</string>
     <string name="sign_out">Sign out</string>
+    <string name="sign_out_prompt">Are you sure you want to sign out of %1$s?</string>
 </resources>
