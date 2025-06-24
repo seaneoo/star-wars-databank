@@ -13,9 +13,13 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import edu.regis.soconnor005.starwarsdatabank.auth.AuthService
 import edu.regis.soconnor005.starwarsdatabank.databinding.ActivityWelcomeBinding
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.ErrorDialogFragment
+import kotlinx.coroutines.launch
 
 class WelcomeActivity : AppCompatActivity() {
     private var _binding: ActivityWelcomeBinding? = null
@@ -58,6 +62,21 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.textViewVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
         binding.textViewAuthor.text = getString(R.string.author, "Sean O'Connor")
+
+        binding.buttonLoginGithub.setOnClickListener {
+            lifecycleScope.launch {
+                try {
+                    AuthService.signInGitHub(this@WelcomeActivity)
+                    val landingActivity = Intent(this@WelcomeActivity, LandingActivity::class.java)
+                    startActivity(landingActivity)
+                    finish()
+                } catch (e: Exception) {
+                    ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                        supportFragmentManager, "LOGIN_ERROR_DIALOG"
+                    )
+                }
+            }
+        }
 
         binding.buttonLogin.setOnClickListener {
             val loginActivity = Intent(this, LoginActivity::class.java)

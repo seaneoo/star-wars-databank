@@ -2,6 +2,7 @@
     <string name="app_name" translatable="false">Databank</string>
     <string name="ipsum" translatable="false">Lorem Ipsum</string>
     <string name="login">Login</string>
+    <string name="login_github">Continue with GitHub</string>
     <string name="register">Register</string>
     <string name="version">Version %1$s</string>
     <string name="author">Made by %1$s</string>
