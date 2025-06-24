@@ -13,6 +13,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import edu.regis.soconnor005.starwarsdatabank.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
@@ -65,6 +67,12 @@ class WelcomeActivity : AppCompatActivity() {
         binding.buttonRegister.setOnClickListener {
             val registerActivity = Intent(this, RegisterActivity::class.java)
             startActivity(registerActivity)
+        }
+
+        if (Firebase.auth.currentUser != null) {
+            val landingActivity = Intent(this, LandingActivity::class.java)
+            startActivity(landingActivity)
+            finish()
         }
     }
 }
