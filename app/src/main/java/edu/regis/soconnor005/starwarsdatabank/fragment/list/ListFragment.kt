@@ -1,5 +1,6 @@
 package edu.regis.soconnor005.starwarsdatabank.fragment.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import edu.regis.soconnor005.starwarsdatabank.WelcomeActivity
+import edu.regis.soconnor005.starwarsdatabank.auth.AuthService
 import edu.regis.soconnor005.starwarsdatabank.data.DatabankViewModel
 import edu.regis.soconnor005.starwarsdatabank.database.Entry
 import edu.regis.soconnor005.starwarsdatabank.databinding.FragmentListBinding
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.ErrorDialogFragment
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.SignOutDialogFragment
 import kotlinx.coroutines.launch
 
 class ListFragment : Fragment() {
@@ -50,6 +55,27 @@ class ListFragment : Fragment() {
 
         binding.buttonAddItem.setOnClickListener {
             navController.navigate(ListFragmentDirections.actionListFragmentToAddFragment())
+        }
+
+        binding.buttonSignOut.setOnClickListener {
+            SignOutDialogFragment {
+                lifecycleScope.launch {
+                    try {
+                        AuthService.signOut()
+                        val welcomeActivity = Intent(context, WelcomeActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        startActivity(welcomeActivity)
+                        requireActivity().finish()
+                    } catch (e: Exception) {
+                        ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                            parentFragmentManager, "SIGN_OUT_ERROR_DIALOG"
+                        )
+                    }
+                }
+            }.show(
+                parentFragmentManager, "SIGN_OUT_PROMPT_DIALOG"
+            )
         }
     }
 

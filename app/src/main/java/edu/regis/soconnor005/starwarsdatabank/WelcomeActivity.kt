@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnticipateInterpolator
-import android.widget.Button
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
@@ -15,8 +13,18 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import edu.regis.soconnor005.starwarsdatabank.auth.AuthService
+import edu.regis.soconnor005.starwarsdatabank.databinding.ActivityWelcomeBinding
+import edu.regis.soconnor005.starwarsdatabank.fragment.dialog.ErrorDialogFragment
+import kotlinx.coroutines.launch
 
 class WelcomeActivity : AppCompatActivity() {
+    private var _binding: ActivityWelcomeBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         /**
          * Install splash screen and set up animation(s)
@@ -33,13 +41,14 @@ class WelcomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        setContentView(R.layout.activity_welcome)
+        _binding = ActivityWelcomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         /**
          * Modified the default insets code
          * https://developer.android.com/develop/ui/views/layout/edge-to-edge
          */
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_welcome)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars =
                 insets.getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout())
             v.updateLayoutParams<ViewGroup.MarginLayoutParams> {
@@ -51,19 +60,38 @@ class WelcomeActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        findViewById<TextView>(R.id.textView_version).text =
-            getString(R.string.version, BuildConfig.VERSION_NAME)
-        findViewById<TextView>(R.id.textView_author).text =
-            getString(R.string.author, "Sean O'Connor")
+        binding.textViewVersion.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+        binding.textViewAuthor.text = getString(R.string.author, "Sean O'Connor")
 
-        findViewById<Button>(R.id.button_login).setOnClickListener {
+        binding.buttonLoginGithub.setOnClickListener {
+            lifecycleScope.launch {
+                try {
+                    AuthService.signInGitHub(this@WelcomeActivity)
+                    val landingActivity = Intent(this@WelcomeActivity, LandingActivity::class.java)
+                    startActivity(landingActivity)
+                    finish()
+                } catch (e: Exception) {
+                    ErrorDialogFragment(e.localizedMessage ?: "Unknown error").show(
+                        supportFragmentManager, "LOGIN_ERROR_DIALOG"
+                    )
+                }
+            }
+        }
+
+        binding.buttonLogin.setOnClickListener {
             val loginActivity = Intent(this, LoginActivity::class.java)
             startActivity(loginActivity)
         }
 
-        findViewById<Button>(R.id.button_register).setOnClickListener {
+        binding.buttonRegister.setOnClickListener {
             val registerActivity = Intent(this, RegisterActivity::class.java)
             startActivity(registerActivity)
+        }
+
+        if (Firebase.auth.currentUser != null) {
+            val landingActivity = Intent(this, LandingActivity::class.java)
+            startActivity(landingActivity)
+            finish()
         }
     }
 }

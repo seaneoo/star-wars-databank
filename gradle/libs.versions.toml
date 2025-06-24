@@ -1,7 +1,7 @@
 [versions]
 agp = "8.10.1"
 coreSplashscreen = "1.0.1"
-kotlin = "2.1.20"
+kotlin = "2.1.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -12,7 +12,9 @@ activity = "1.10.1"
 constraintlayout = "2.2.1"
 navigation = "2.9.0"
 lifecycle = "2.9.1"
-room = "2.7.1"
+room = "2.7.2"
+gms = "4.4.2"
+firebase = "33.15.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,9 +34,13 @@ lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata-
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth-ktx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 navigation = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+gms = { id = "com.google.gms.google-services", version.ref = "gms" }

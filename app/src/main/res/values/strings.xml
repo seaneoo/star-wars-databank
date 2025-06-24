@@ -2,15 +2,15 @@
     <string name="app_name" translatable="false">Databank</string>
     <string name="ipsum" translatable="false">Lorem Ipsum</string>
     <string name="login">Login</string>
+    <string name="login_github">Continue with GitHub</string>
     <string name="register">Register</string>
     <string name="version">Version %1$s</string>
     <string name="author">Made by %1$s</string>
-    <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="confirm_password">Confirm password</string>
     <string name="_continue">Continue</string>
     <string name="back">Back</string>
-    <string name="forgot_username_password">Forgot username or password?</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="add_item">Add Entry</string>
     <string name="edit_item">Edit</string>
     <string name="delete_item">Delete entry</string>
@@ -23,9 +23,12 @@
     <string name="name_required">name is required.</string>
     <string name="description_required">description is required.</string>
     <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="save_these_changes">Save these changes?</string>
     <string name="close">Close</string>
     <string name="character">Character</string>
     <string name="planet">Planet</string>
     <string name="vehicle">Vehicle</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_prompt">Are you sure you want to sign out of %1$s?</string>
 </resources>
