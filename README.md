@@ -1,3 +1,3 @@
 # Star Wars Databank
 
-A native Android app built with Kotlin and XML layouts for CS 338 at Regis University. Uses AndroidX Navigation, Room, and Firebase user authentication. Currently does not hook into any third-party APIs, all data must be added by the user.
+A native Android application developed using Kotlin and XML layouts as part of coursework for CS 338 at Regis University. The app leverages AndroidX Navigation for in-app navigation, Room for local data persistence, and Firebase Authentication for user login. Currently, the application operates without third-party API integrations, requiring users to manually input and manage all data within the app.
